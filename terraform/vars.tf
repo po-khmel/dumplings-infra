@@ -18,3 +18,10 @@ variable "token" {
   description = "OAuth YC token"
   type        = string
 }
+
+#add network_name var to k8s etc
+variable "network_name" {
+  description = "Network name"
+  type        = string
+  default     = "mynet"
+}
