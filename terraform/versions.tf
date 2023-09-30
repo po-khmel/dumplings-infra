@@ -6,14 +6,13 @@ terraform {
     }
   }
   required_version = ">= 0.13"
-  #   backend "s3" {
-  #     endpoint = "value"
-  #     bucket   = "value"
-  #     region   = "value"
-  #     key      = "value"
+  backend "s3" {
+    endpoint = "storage.yandexcloud.net"
+    bucket   = "std-017-042-dumpling-tf-state"
+    region   = "ru-central1"
+    key      = "terraform.tfstate"
 
-  #     skip_region_validation      = true
-  #     skip_credentials_validation = true
-  #   }
-  # }
+    skip_region_validation      = true
+    skip_credentials_validation = true
+  }
 }
