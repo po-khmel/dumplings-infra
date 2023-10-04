@@ -2,7 +2,7 @@ all:
   children:
     backend:
       hosts:
-        <IP>:
+        158.160.124.219:
     frontend:
       hosts:
-        <IP>:
+        158.160.124.219:

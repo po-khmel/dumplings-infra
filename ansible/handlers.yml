@@ -1,7 +1,0 @@
-handlers:
-  - name: Restart Docker service
-    systemd:
-      name: docker
-      state: restarted
-    tags:
-      - install
