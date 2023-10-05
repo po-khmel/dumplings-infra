@@ -35,6 +35,8 @@
 - name: Install Docker-CE (Community Edition), the Docker-CE CLI, the containerd runtime, and Docker Compose
   ansible.builtin.apt:
     name:
+      - docker
+      - docker-compose
       - docker-ce
       - docker-ce-cli
       - containerd.io
@@ -42,6 +44,13 @@
     state: latest
     update_cache: true
   tags: install
+
+- name: Ensure user is in the docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+  tags: setup
 
 - name: Start and enable Docker service
   ansible.builtin.systemd:
