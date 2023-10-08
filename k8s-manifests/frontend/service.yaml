@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dumplings-frontend
+  labels:
+    app: dumplings-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: dumplings-frontend
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP

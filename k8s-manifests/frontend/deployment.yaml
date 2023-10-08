@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dumplings-frontend
+  labels:
+    app: dumplings-frontend
+  replicas: 1
+  revisionHistoryLimit: 7
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 50%
+  selector:
+    matchLabels:
+      app: dumplings-frontend
+  template:
+    metadata:
+      labels:
+        app: dumplings-frontend
+    spec:
+      imagePullSecrets:
+        - name: docker-config-dumplings-frontend
+      volumes:
+        - name: dumplings-nginx-conf
+          configMap:
+            name: dumplings-nginx-conf
+      containers:
+        - name: dumplings-frontend
+          image: gitlab.praktikum-services.ru:5050/std-017-042/dumplingstore/dumplings-frontend:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+          ports:
+            - name: dumplings-frontend
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
+          volumeMounts:
+            - name: dumplings-nginx-conf
+              mountPath: /etc/nginx/conf.d/nginx.conf
+              subPath: nginx.conf
