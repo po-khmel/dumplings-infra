@@ -10,6 +10,5 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: 8081
       protocol: TCP
-      name: http
   selector:
     app: {{ .Chart.Name }}
