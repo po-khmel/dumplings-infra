@@ -3,6 +3,13 @@ replicaCount: 1
 imagePullSecrets:
   - name: docker-config-secret-frontend
 
+rollingUpdateEnabled: true
+rollingUpdate:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 50%
+
 resources:
   limits:
     cpu: "500m"
@@ -12,6 +19,9 @@ resources:
     memory: "128Mi"
 
 fqdn: "<FQDN>"
+
+hpa:
+  enabled: false
 
 ingress:
   enabled: true
