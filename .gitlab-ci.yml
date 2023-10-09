@@ -25,7 +25,7 @@ deploy_helm:
   stage: deploy
   image: alpine/helm:3.2.1
   rules:
-    - if "$CI_COMMIT_MESSAGE =~ /deploy/i"
+    - if: "$CI_COMMIT_MESSAGE =~ /deploy/i"
   before_script:
     - mkdir .kube/
     - chmod 700 .kube/
