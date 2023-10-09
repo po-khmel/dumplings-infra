@@ -6,6 +6,7 @@ variables:
   KUBESEC_HELM_CHARTS_PATH: "dumplings-helm-charts"
 
 stages:
+  - test
   - release
   - deploy
 
