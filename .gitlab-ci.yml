@@ -36,7 +36,6 @@ deploy_helm:
     - chmod 644 .kube/config
     - cp ${CA_PEM} ca.pem
     - chmod 600 ca.pem
-    - pwd
   script:
     - helm repo add nexus ${NEXUS_HELM_REPO} --username ${NEXUS_UNAME} --password ${NEXUS_PASS}
     - helm repo update
@@ -45,6 +44,8 @@ deploy_helm:
       --install 
       --set environment=prod 
       --set fqdn="po-khmel.space" 
+      --kube-ca-file ca.pem
+      --kubeconfig .kube/config
       --atomic --timeout 15m
   after_script:
     - rm -f .kube/config ca.pem
