@@ -20,6 +20,7 @@ release_charts:
   script:
     - apk add curl
     - CHART_VER=$(helm package ./dumplings-helm-charts | grep 'dumplings-helm-charts-.\+')
+    - echo "${CHART_VER}"
     - curl -u ${NEXUS_UNAME}:${NEXUS_PASS} ${NEXUS_HELM_REPO} --upload-file ${CHART_VER}
 
 ##### deploy helm charts #####
