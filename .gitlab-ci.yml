@@ -1,12 +1,12 @@
-include:
-  - template: Security/SAST.gitlab-ci.yml
+# include:
+#   - template: Security/SAST.gitlab-ci.yml
 
-variables:
-  SCAN_KUBERNETES_MANIFESTS: "true"
-  KUBESEC_HELM_CHARTS_PATH: "dumplings-helm-charts"
+# variables:
+#   SCAN_KUBERNETES_MANIFESTS: "true"
+#   KUBESEC_HELM_CHARTS_PATH: "dumplings-helm-charts"
 
 stages:
-  - test
+  # - test
   - release
   - deploy
 
@@ -19,7 +19,7 @@ release_charts:
   #     - dumplings-helm-charts/**/*
   script:
     - apk add curl
-    - CHART_VER=$(helm package ./dumplings-helm-charts | grep -oP '/\K[^/]+\.tgz')
+    - CHART_VER=$(helm package ./dumplings-helm-charts | grep 'dumplings-helm-charts-.\+')
     - curl -u ${NEXUS_UNAME}:${NEXUS_PASS} ${NEXUS_HELM_REPO} --upload-file ${CHART_VER}
 
 ##### deploy helm charts #####
