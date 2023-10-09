@@ -18,9 +18,6 @@ variable "domain-zone-name" {
 
 variable "labels" {
   description = "Labels to assign to DNS zone"
-  type = object({
-    name = string
-  })
   default = {
     type = "public"
   }
