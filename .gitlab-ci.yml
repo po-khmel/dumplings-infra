@@ -19,8 +19,8 @@ release_charts:
   #     - dumplings-helm-charts/**/*
   script:
     - apk add curl
-    - helm package ./dumplings-helm-charts
-    - curl -u ${NEXUS_UNAME}:${NEXUS_PASS} ${NEXUS_HELM_REPO} --upload-file dumplings-helm-charts-*.tgz
+    - CHART_VER=$(helm package ./dumplings-helm-charts | grep -oP '/\K[^/]+\.tgz')
+    - curl -u ${NEXUS_UNAME}:${NEXUS_PASS} ${NEXUS_HELM_REPO} --upload-file ${CHART_VER}
 
 ##### deploy helm charts #####
 deploy_helm:
