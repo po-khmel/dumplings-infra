@@ -34,11 +34,10 @@ deploy_helm:
     - chmod 700 .kube/
     - cp ${KUBECONFIG} .kube/config
     - chmod 644 .kube/config
-    - cp ${CA_PEM} ca.pem
+    - cp ${CA_PEM} .kube/ca.pem
   script:
     - helm repo add nexus ${NEXUS_HELM_REPO} --username ${NEXUS_UNAME} --password ${NEXUS_PASS}
     - helm repo update
-    - cat ca.pem
     - >
       helm upgrade dumplings nexus/dumplings-helm-charts 
       --install 
