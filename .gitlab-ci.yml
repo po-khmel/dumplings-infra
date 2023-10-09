@@ -33,7 +33,7 @@ deploy_helm:
     - mkdir .kube/
     - chmod 700 .kube/
     - cp ${KUBECONFIG} .kube/config
-    - chmod 644 .kube/config
+    - chmod 600 .kube/config
     - cp ${CA_PEM} ca.pem
     - chmod 600 ca.pem
   script:
@@ -46,6 +46,7 @@ deploy_helm:
       --set fqdn="po-khmel.space" 
       --kube-ca-file ca.pem
       --kubeconfig .kube/config
+      --namespace default
       --atomic --timeout 15m
   after_script:
     - rm -f .kube/config ca.pem
