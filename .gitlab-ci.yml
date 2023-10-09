@@ -1,0 +1,49 @@
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
+variables:
+  SCAN_KUBERNETES_MANIFESTS: "true"
+  KUBESEC_HELM_CHARTS_PATH: "dumplings-helm-charts"
+
+stages:
+  - release
+  - deploy
+
+##### upload new helm charts #####
+release_charts:
+  stage: release
+  image: alpine/helm:3.2.1
+  only:
+    changes:
+      - dumplings-helm-charts/**/*
+  script:
+    - helm package ./dumplings-helm-charts
+    - curl -u ${NEXUS_UNAME}:${NEXUS_PASS} ${NEXUS_HELM_REPO} --upload-file dumplings-helm-charts
+
+##### deploy helm charts #####
+deploy_helm:
+  stage: deploy
+  image: alpine/helm:3.2.1
+  rules:
+    - if "$CI_COMMIT_MESSAGE =~ /deploy/i"
+  only:
+    changes:
+      - dumplings-helm-charts/**/*
+  before_script:
+    - mkdir .kube/
+    - chmod 700 .kube/
+    - cp ${KUBECONFIG} .kube/config
+    - chmod 644 .kube/config
+    - cp ${CA_PEM} ca.pem
+    - kubectl get namespace
+  script:
+    - helm repo add nexus ${NEXUS_HELM_REPO} --username ${NEXUS_UNAME} --password ${NEXUS_PASS}
+    - helm repo update
+    - >
+      helm upgrade dumplings nexus/dumplings-helm-charts 
+      --install 
+      --set environment=prod 
+      --set fqdn="po-khmel.space" 
+      --atomic --timeout 15m
+  after_script:
+    - rm -f .kube/config ca.pem

@@ -38,7 +38,7 @@ metadata:
               cpu: "250m"
           ports:
             - name: dumplings-frontend
-              containerPort: 8080
+              containerPort: 80
           livenessProbe:
             httpGet:
               path: /
