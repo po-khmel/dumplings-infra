@@ -18,6 +18,7 @@ release_charts:
   #   changes:
   #     - dumplings-helm-charts/**/*
   script:
+    - apk add curl
     - helm package ./dumplings-helm-charts
     - curl -u ${NEXUS_UNAME}:${NEXUS_PASS} ${NEXUS_HELM_REPO} --upload-file dumplings-helm-charts
 
