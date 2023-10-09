@@ -1,11 +1,9 @@
 resource "yandex_dns_zone" "zone1" {
-  name        = "my-public-zone"
+  name        = var.domain-zone-name
   description = "Public zone for dumplings k8s cluster"
 
-  labels = {
-    type = "public"
-  }
+  labels = var.labels
 
-  zone   = "po-kheml1.space."
+  zone   = "${dns-zone}."
   public = true
 }

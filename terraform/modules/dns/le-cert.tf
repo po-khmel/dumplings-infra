@@ -1,8 +1,8 @@
 resource "yandex_cm_certificate" "le-certificate" {
   name    = "Dumplings k8s certificate"
-  domains = ["po-khmel.space"]
+  domains = ["${var.fqdn}"]
 
   managed {
-    challenge_type = "DNS_CNAME"
+    challenge_type = var.challenge_type
   }
 }
