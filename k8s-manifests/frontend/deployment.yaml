@@ -4,6 +4,7 @@ metadata:
   name: dumplings-frontend
   labels:
     app: dumplings-frontend
+spec:
   replicas: 1
   revisionHistoryLimit: 7
   strategy:
@@ -37,7 +38,7 @@ metadata:
               memory: "128Mi"
               cpu: "250m"
           ports:
-            - name: dumplings-frontend
+            - name: http
               containerPort: 80
           livenessProbe:
             httpGet:

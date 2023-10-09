@@ -3,3 +3,5 @@ terraform/key.json
 .vscode
 ca.pem
 test.kubeconfig
+*.tgz
+.dockerconfig

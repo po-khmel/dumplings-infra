@@ -1,7 +1,7 @@
 replicaCount: 1
 
 imagePullSecrets:
-  - name: docker-config-secret-frontend
+  - name: docker-config-dumplings-frontend
 
 rollingUpdateEnabled: true
 rollingUpdate:
@@ -78,5 +78,4 @@ configData:
       location = /50x.html {
           root   /usr/share/nginx/html;
       } 
-
     }
