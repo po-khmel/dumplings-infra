@@ -18,7 +18,7 @@ resources:
     cpu: "250m"
     memory: "128Mi"
 
-fqdn: "<FQDN>"
+fqdn: "po-khmel.space"
 
 hpa:
   enabled: false
@@ -27,13 +27,13 @@ ingress:
   enabled: true
   className: "nginx"
   hosts:
-    - host: "<FQDN>"
+    - host: "po-khmel.space"
       paths:
         - path: "/"
           pathType: Prefix
   tls:
     - hosts:
-        - "<FQDN>"
+        - "po-khmel.space"
 
 service:
   type: ClusterIP

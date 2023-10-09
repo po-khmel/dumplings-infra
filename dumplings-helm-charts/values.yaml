@@ -29,4 +29,4 @@ frontend:
     limits:
       memory: "1025Mi"
       cpu: "0.2"
-  fqdn: <FQDN>
+  fqdn: "po-khmel.space"
