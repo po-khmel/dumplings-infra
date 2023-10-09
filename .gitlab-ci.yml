@@ -26,7 +26,7 @@ stages:
 ##### deploy helm charts #####
 deploy_helm:
   stage: deploy
-  image: alpine/helm:3.2.1
+  image: alpine/helm:3.11.1
   rules:
     - if: "$CI_COMMIT_MESSAGE =~ /deploy/i"
   before_script:
