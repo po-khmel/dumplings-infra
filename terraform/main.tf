@@ -14,3 +14,7 @@ module "yc_test_vm_dumplings" {
   zone       = var.zone
   vm_network = var.network_name
 }
+
+module "yc_dns_dumplings" {
+  source = "./modules/dns"
+}
