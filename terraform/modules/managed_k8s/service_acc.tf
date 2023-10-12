@@ -29,12 +29,12 @@ resource "yandex_resourcemanager_folder_iam_member" "images-puller" {
 resource "yandex_kms_symmetric_key" "kms-key" {
   name              = "kms-key"
   default_algorithm = "AES_128"
-  rotation_period   = "8760h" # 1 year.
+  rotation_period   = "8760h" # 1 год.
 }
 
-# create a single member SA as viewer 
-resource "yandex_resourcemanager_folder_iam_member" "viewer" {
+# create a single member SA as editor 
+resource "yandex_resourcemanager_folder_iam_member" "editor" {
   folder_id = var.folder_id
-  role      = "viewer"
+  role      = "editor"
   member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
 }
