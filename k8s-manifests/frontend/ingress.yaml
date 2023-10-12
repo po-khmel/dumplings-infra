@@ -12,7 +12,7 @@ spec:
   tls:
     - hosts:
         - "po-khmel.space"
-      secretName: letsencrypt
+      secretName: dumplings-ingress
   rules:
     - host: "po-khmel.space"
       http:
