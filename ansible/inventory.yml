@@ -1,0 +1,8 @@
+all:
+  children:
+    backend:
+      hosts:
+        84.252.130.199:
+    frontend:
+      hosts:
+        84.252.130.199:
