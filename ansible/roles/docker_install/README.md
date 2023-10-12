@@ -1,38 +1,43 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Ansible role to install Docker nad Dicker Compose on Ubuntu
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+ansible >= 6.6.0
+ansible-core >= 2.11.3
 
-Role Variables
+
+Role Defaults
 --------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Variable        | Description                         | Default Value                              |
+| --------------- | ----------------------------------- | ------------------------------------------ |
+| docker_repo_url | URL for Docker repository           | "https://download.docker.com/linux/ubuntu" |
+| docker_arch     | Architecture of the host system     | "{{ ansible_architecture }}"               |
+| docker_gpg_path | Path to the Docker GPG keyring file | "/etc/apt/keyrings/docker.gpg"             |
+| docker_codename | Ubuntu codename for the release     | "focal"                                    |
 
 Example Playbook
 ----------------
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```YAML
+- name: Install Docker on Ubuntu 20.04
+  hosts: all
+  become: true
+  vars:
+    docker_codename: "focal"
+  roles:
+    - docker_install
 
+```
 License
 -------
-
 BSD
 
 Author Information
 ------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[Polina Khmelevskaia](https://github.com/po-khmel)

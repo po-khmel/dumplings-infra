@@ -2,7 +2,7 @@
 - name: Install aptitude
   ansible.builtin.apt:
     name: aptitude
-    state: latest
+    state: present
     update_cache: true
   tags: install
 
@@ -16,7 +16,7 @@
       - python3-pip
       - virtualenv
       - python3-setuptools
-    state: latest
+    state: present
     update_cache: true
   tags: install
 
@@ -41,7 +41,7 @@
       - docker-ce-cli
       - containerd.io
       - docker-compose-plugin
-    state: latest
+    state: present
     update_cache: true
   tags: install
 
@@ -49,8 +49,9 @@
   user:
     name: "{{ ansible_user }}"
     groups: docker
-    append: yes
+    append: true
   tags: setup
+  notify: Restart Docker service
 
 - name: Start and enable Docker service
   ansible.builtin.systemd:

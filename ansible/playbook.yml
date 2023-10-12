@@ -2,5 +2,7 @@
 - name: Install Docker on Ubuntu 20.04
   hosts: all
   become: true
+  vars:
+    docker_codename: 'focal'
   roles:
     - docker_install
