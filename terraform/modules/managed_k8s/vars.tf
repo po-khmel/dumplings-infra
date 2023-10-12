@@ -92,4 +92,10 @@ variable "nodes_scheduling_policy" {
   }
 }
 
+variable "nodes_fixed_scale" {
+  description = "Number of instances to scale up and down group of k8s nodes"
+  type        = number
+  default     = 1
+}
+
 

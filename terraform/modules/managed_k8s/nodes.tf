@@ -31,7 +31,7 @@ resource "yandex_kubernetes_node_group" "k8s-nodes" {
     }
 
     container_runtime {
-      type = "containerd"
+      type = var.nodes_container_runtime
     }
 
     labels = {
@@ -45,7 +45,7 @@ resource "yandex_kubernetes_node_group" "k8s-nodes" {
 
   scale_policy {
     fixed_scale {
-      size = 1
+      size = var.nodes_fixed_scale
     }
   }
 

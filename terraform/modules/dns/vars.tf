@@ -31,3 +31,14 @@ variable "rs_data" {
   type        = list(string)
   default     = ["10.1.0.1"]
 }
+
+variable "FQDN" {
+  description = "FQDN for the Momo store"
+  type        = string
+}
+
+variable "challenge_type" {
+  description = "Domain owner-check method"
+  type        = string
+  default     = "DNS_CNAME"
+}

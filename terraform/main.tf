@@ -25,4 +25,5 @@ module "yc_dns" {
   source   = "./modules/dns"
   dns_fqdn = var.FQDN
   rs_fqdn  = var.FQDN
+  FQDN     = var.FQDN
 }
