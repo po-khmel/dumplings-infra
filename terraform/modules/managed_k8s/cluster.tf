@@ -1,7 +1,7 @@
 resource "yandex_kubernetes_cluster" "k8s-zonal" {
-  name        = "k8s-dumplings"
+  name        = var.k8s_name
   description = "k8s cluster for dumplings project"
-  network_id  = yandex_vpc_network.mynet.id
+  network_id  = data.yandex_vpc_network.mynet.id
 
   master {
     version = var.k8s_version
@@ -22,10 +22,10 @@ resource "yandex_kubernetes_cluster" "k8s-zonal" {
   node_service_account_id = yandex_iam_service_account.myaccount.id
 
   labels = {
-    project = "dumplingstore"
+    project = var.k8s_project_label
   }
 
-  release_channel = "RAPID"
+  release_channel = var.k8s_release_channel
 
   depends_on = [
     yandex_resourcemanager_folder_iam_member.k8s-clusters-agent,

@@ -1,30 +1,33 @@
-variable "fqdn" {
-  description = "Domain Name"
-  type        = string
-  default     = "po-khmel.space"
-}
-
-variable "dns-zone" {
-  description = "Domain Zone"
-  type        = string
-  default     = "po-khmel1.space"
-}
-
-variable "domain-zone-name" {
-  description = "Domain Zone Name"
+variable "dns_zone_name" {
+  description = "DNS public zone name"
   type        = string
   default     = "my-public-zone"
 }
 
-variable "labels" {
-  description = "Labels to assign to DNS zone"
-  default = {
-    type = "public"
-  }
+variable "dns_fqdn" {
+  description = "DNS Zone based on FQDN"
+  type        = string
 }
 
-variable "challenge_type" {
-  description = "Challenge typr for Lets'Encrypt certificates"
+variable "rs_fqdn" {
+  description = "Recordset based on FQDN"
   type        = string
-  default     = "DNS_CNAME"
+}
+
+variable "rs_type" {
+  description = "Type of a record set"
+  type        = string
+  default     = "A"
+}
+
+variable "rs_ttl" {
+  description = "TTL of a record set (seconds)"
+  type        = number
+  default     = 200
+}
+
+variable "rs_data" {
+  description = "The string data for the records in this record set"
+  type        = list(string)
+  default     = ["10.1.0.1"]
 }
