@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Chart.Name }}-ingress
+  name: {{ .Chart.Name }}
   labels:
     app: {{ .Chart.Name }}
   annotations:
@@ -12,7 +12,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.fqdn | quote }}
-      secretName: letsencrypt
+      secretName: {{ .Chart.Name }}-ingress
   rules:
     - host: {{ .Values.fqdn | quote }}
       http:
