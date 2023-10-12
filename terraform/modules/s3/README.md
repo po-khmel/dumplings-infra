@@ -1,7 +1,7 @@
 # Module to create test compute instance
-Module creates two S3 buckets in YC:
-1. Private S3 for storing `.tfstate`
-2. Public S3 for images for Momo store
+Module creates two S3 buckets in YC:  
+1. Private S3 for storing `.tfstate`  
+2. Public S3 for images for Momo store  
 
 ## Dependencies
 Terraform version = 1.5.7
