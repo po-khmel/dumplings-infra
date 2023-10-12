@@ -1,0 +1,18 @@
+galaxy_info:
+  author: Polina Khmelevskaia
+  description: your role description
+
+  license: GPL-2.0-or-later
+
+  min_ansible_version: "2.1"
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - "focal"
+
+  galaxy_tags: []
+
+dependencies: []

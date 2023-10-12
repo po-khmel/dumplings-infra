@@ -1,0 +1,3 @@
+```
+ansible-playbook main.yml
+```
