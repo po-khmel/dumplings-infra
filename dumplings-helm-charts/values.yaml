@@ -1,0 +1,32 @@
+# common values
+global:
+  environment: production
+
+  revisionHistoryLimit: 7
+
+  image:
+    repository: gitlab.praktikum-services.ru:5050/std-017-042/dumplingstore/
+    pullPolicy: Always
+    tag: "latest"
+
+  gitlabSecretData: ewoJImF1dGhzIjogewoJCSJnaXRsYWIucHJha3Rpa3VtLXNlcnZpY2VzLnJ1OjUwNTAiOiB7CgkJCSJhdXRoIjogImMzUmtMVEF4Tnkwd05ESTZOemh4ZHpZM1JWRT0iCgkJfSwKCQkiaHR0cHM6Ly9pbmRleC5kb2NrZXIuaW8vdjEvIjogewoJCQkiYXV0aCI6ICJjRzlyYUcxbGJEcGtUMk5yUlhKb1ZXST0iCgkJfQoJfQp9
+
+backend:
+  replicaCount: 2
+  resources:
+    limits:
+      memory: "1Gi"
+    requests:
+      cpu: "250m"
+      memory: "128Mi"
+
+frontend:
+  replicaCount: 1
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "0.1"
+    limits:
+      memory: "1025Mi"
+      cpu: "0.2"
+  fqdn: "po-khmel.space"

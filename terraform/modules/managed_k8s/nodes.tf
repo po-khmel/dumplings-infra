@@ -1,19 +1,19 @@
 resource "yandex_kubernetes_node_group" "k8s-nodes" {
   cluster_id  = yandex_kubernetes_cluster.k8s-zonal.id
   description = "group of k8s nodes for dumplings project"
-  version     = "1.24"
+  version     = var.k8s_version
 
   instance_template {
-    platform_id = "standard-v2"
+    platform_id = var.nodes_platform_id
 
     resources {
-      memory = 2
-      cores  = 2
+      memory = var.nodes_memory
+      cores  = var.nodes_cpu
     }
 
     boot_disk {
-      type = "network-hdd"
-      size = 64
+      type = var.nodes_boot_disk_type
+      size = var.nodes_boot_disk_size
     }
 
     metadata = {
@@ -35,11 +35,11 @@ resource "yandex_kubernetes_node_group" "k8s-nodes" {
     }
 
     labels = {
-      project = "dumplingstore"
+      project = var.k8s_project_label
     }
 
     scheduling_policy {
-      preemptible = false
+      preemptible = var.nodes_scheduling_policy.preemptible
     }
   }
 
@@ -51,7 +51,7 @@ resource "yandex_kubernetes_node_group" "k8s-nodes" {
 
   allocation_policy {
     location {
-      zone = "ru-central1-a"
+      zone = yandex_vpc_subnet.mysubnet.zone
     }
   }
 }

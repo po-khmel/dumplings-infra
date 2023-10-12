@@ -25,3 +25,9 @@ variable "network_name" {
   type        = string
   default     = "mynet"
 }
+
+variable "FQDN" {
+  description = "FQDN for the Momo store"
+  type        = string
+  default     = "po-khmel.space"
+}
