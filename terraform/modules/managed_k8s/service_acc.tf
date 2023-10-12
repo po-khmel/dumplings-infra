@@ -29,7 +29,7 @@ resource "yandex_resourcemanager_folder_iam_member" "images-puller" {
 resource "yandex_kms_symmetric_key" "kms-key" {
   name              = "kms-key"
   default_algorithm = "AES_128"
-  rotation_period   = "8760h" # 1 год.
+  rotation_period   = "8760h" # 1 year.
 }
 
 # create a single member SA as viewer 
