@@ -6,19 +6,18 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   ingressClassName: {{ .Values.ingress.className | quote }}
-  tls:
-    - hosts:
-        - {{ .Values.fqdn | quote }}
-      secretName: dumplings-ingress
   rules:
     - host: {{ .Values.fqdn | quote }}
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: {{ .Chart.Name }}

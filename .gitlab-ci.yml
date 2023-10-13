@@ -27,8 +27,7 @@ stages:
 deploy_helm:
   stage: deploy
   image: alpine/helm:3.11.1
-  rules:
-    - if: "$CI_COMMIT_MESSAGE =~ /deploy/i"
+  when: manual
   before_script:
     - mkdir .kube/
     - chmod 700 .kube/
@@ -47,6 +46,7 @@ deploy_helm:
       --kube-ca-file ca.pem
       --kubeconfig .kube/config
       --namespace default
-      --atomic --timeout 15m
+      --atomic 
+      --timeout 15m
   after_script:
     - rm -f .kube/config ca.pem

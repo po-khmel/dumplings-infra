@@ -1,8 +1,8 @@
 replicaCount: 2
 
 podAnnotations:
-  prometheus.io/path: /actuator/prometheus
-  prometheus.io/port: "8080"
+  prometheus.io/path: /metrics
+  prometheus.io/port: "8081"
   prometheus.io/scrape: "true"
 
 imagePullSecrets:
@@ -33,3 +33,9 @@ hpa:
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+
+fqdn: "po-khmel.space"
