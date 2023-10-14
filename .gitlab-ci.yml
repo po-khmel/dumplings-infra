@@ -14,9 +14,9 @@ stages:
 release_charts:
   stage: release
   image: alpine/helm:3.2.1
-  # only:
-  #   changes:
-  #     - dumplings-helm-charts/**/*
+  only:
+    changes:
+      - dumplings-helm-charts/**/*
   script:
     - apk add curl
     - CHART_VER=$(helm package ./dumplings-helm-charts | grep -o 'dumplings-helm-charts-.\+')
