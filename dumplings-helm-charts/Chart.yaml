@@ -1,0 +1,15 @@
+apiVersion: v2
+name: dumplings-helm-charts
+description: A Helm chart for Kubernetes Dumplings Store
+
+type: application
+
+version: 0.1.7
+
+appVersion: "1.0.0"
+
+dependencies:
+  - name: backend
+    version: 0.1.0
+  - name: frontend
+    version: 0.1.0
