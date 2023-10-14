@@ -105,14 +105,14 @@ Trickster
 ```bash
 helm repo add tricksterproxy https://helm.tricksterproxy.io 
 helm repo update
-cd ../monitoring
+cd ../k8s-manifests/monitoring
 helm upgrade --install trickster tricksterproxy/trickster --namespace default -f trickster.yaml
 kubectl get pods -l "app=trickster"
 ```
 
 Grafana
 ```bash
-cd ../monitoring
+cd ../k8s-manifests/monitoring
 kubectl apply -f grafana.yaml\n
 kubectl get pods -l "app=grafana"
 export GRAFANA_IP=$(kubectl get service/grafana -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
@@ -122,7 +122,7 @@ echo http://$GRAFANA_IP:$GRAFANA_PORT
 
 Loki
 ```bash
-cd ../monitoring
+cd ../k8s-manifests/monitoring
 helm show values grafana/loki-distributed > loki-distributed-overrides.yaml
 helm upgrade --install --values loki-distributed-overrides.yaml loki grafana/loki-distributed
 ```
