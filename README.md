@@ -1,4 +1,5 @@
 # Dumplings Store Infrastructure
+
 - [Dumplings Store Infrastructure](#dumplings-store-infrastructure)
   - [Description](#description)
   - [Terraform](#terraform)
@@ -16,82 +17,88 @@
   - [Scripts](#scripts)
 
 ## Description
-Инфраструктурный репозиторий Пельменной №2  
-Код приложения и CI по ссылке https://gitlab.praktikum-services.ru/std-017-042/dumplingstore
+Infrastructure repository for Dumplings Store  
+
+Application code and CI can be found at: https://github.com/po-khmel/dumplings-store
+
 
 ## Terraform
 
-Infrastructure as Code описана в [Terraform модулях](./terraform/modules/) . Инфраструктура в Yandex Cloud состоит из:
-- тестовой ВМ
+Infrastructure as Code is described in [Terraform modules](./terraform/modules/). The infrastructure in Yandex Cloud includes:
+- Test VM
 - Managed Cluster for Kubernetes
-- Object Store S3 бакеты для хранения .tfstate и изображений
-- DNS зоны и ресурсных записей
+- Object Store S3 buckets for storing `.tfstate` and images
+- DNS zones and resource records
 
-ссылки на README модулей:
+Links to module READMEs:
 - [dns](./terraform/modules/dns/README.md)
 - [manages_k8s](./terraform/modules/managed_k8s/README.md)
 - [network](./terraform/modules/network/README.md)
 - [s3](./terraform/modules/s3/README.md)
 - [test-vm](./terraform/modules/test-vm/README.md)
+
 ## Ansible
 
-Конфигурация тестовой ВМ, а именно установка Docker и Docker Compose сделана через [Ansible плейбук](./ansible/), который использует [Ansible роль](./ansible/roles/docker_install/).
+Configuration of the test VM, specifically the installation of Docker and Docker Compose, is done through an [Ansible playbook](./ansible/) that utilises an [Ansible role](./ansible/roles/docker_install/).
 
-ссылки на README:
-- [плейбук](./ansible/README.md)
-- [роль](./ansible/roles/docker_install/README.md)
+Links to READMEs:
+- [playbook](./ansible/README.md)
+- [role](./ansible/roles/docker_install/README.md)
 
 ## K8S Manifests
 
-[backend](./k8s-manifests/backend/) и [frontend](./k8s-manifests/frontend/) - основа для написания helm чартов для бэка и фронта  
-[cert-manager](./k8s-manifests/cert-manager/acme-issuer.yaml) - менеджер TLS сертификатов  
-[serice_acc](./k8s-manifests/service_acc/sa.yaml) - сервисный аккаунт k8s для генерации статического конфига для CI
+[backend](./k8s-manifests/backend/) and [frontend](./k8s-manifests/frontend/) serve as the basis for writing Helm charts for the backend and frontend.  
+[cert-manager](./k8s-manifests/cert-manager/acme-issuer.yaml) - TLS certificate manager  
+[service_acc](./k8s-manifests/service_acc/sa.yaml) - Kubernetes service account for generating static configuration for CI  
 
-Ingress-контроллер NGINX установлен через Helm чарт
+Ingress controller NGINX is installed via Helm chart:
 ```bash
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm install ingress-nginx ingress-nginx/ingress-nginx
 ```
+
 ## Helm Charts
 
-Чарты [здесь](./dumplings-helm-charts/)
+Charts are available [here](./dumplings-helm-charts/).
+
 ### Backend
-Service настроен на порт 8081, HPA скейлит поды от 1 до 3 в случае утилизации CPU выше 80%, деплоймент обновляется по RollingUpdate.  Ingress бэкенда настроен на VUE_APP_API_URL=/api
+Service is configured to listen on port 8081. HPA scales pods from 1 to 3 in case CPU utilization exceeds 80%. Deployment is updated via RollingUpdate. The backend's Ingress is configured to `VUE_APP_API_URL=/api`.
 
 ### Frontend
-Service настроен на порт 80, ConfigMap содержит конфигурацию nginx, деплоймент обновляется по RollingUpdate, Ingress отправляет на po-khmel.space
+Service is configured to listen on port 80. ConfigMap contains NGINX configuration. Deployment is updated via RollingUpdate. Ingress routes to FQDN.
 
 ## CI
-Настроен `.gitlab-ci.yml`(./.gitlab-ci.yml).   
 
-Пайплайн триггерится при релизе нового Docker контейнера согласно [CI репозитория Пельменной](https://gitlab.praktikum-services.ru/std-017-042/dumplingstore) с коммитом `prod-deploy`
+The `.gitlab-ci.yml` file is [here](./.gitlab-ci.yml).
+
+The pipeline is triggered when a new Docker container is released according to the [CI Dumplings repository](https://gitlab.praktikum-services.ru/std-017-042/dumplingstore) with a commit message of `"prod-deploy"`.
 
 ### Test
-GitLab SAST сканирование Helm чартов и k8s манифестов
+
+GitLab SAST scans Helm charts and K8s manifests.
 
 ### Release
-Новый Helm чарт пакуется и хранится в Nexus репозитории
+
+A new Helm chart is packaged and stored in the Nexus repository.
 
 ### Deploy
-Деплой через Helm в куберенетис, по нажатию кнопки.
 
+Deployment via Helm in Kubernetes triggered manually.
 
 ## Logging and Monitoring
 
-Grafana endpoint http://51.250.14.150:3000  
+**!!! endpoints are unavailable !!!**
 
-user: `view`  
-pass: `dashboard`  
+Grafana [endpoint]  
+User: `view`  
+Password: `dashboard`  
 
-Loki Logs [LINK](http://51.250.14.150:3000/d/o6-BGgnnk/loki-kubernetes-logs?orgId=1)  
-Kubernetes cluster monitoring (via Prometheus) [LINK](http://51.250.14.150:3000/d/fbaf180b-35aa-40d5-b74e-44d53610a04b/kubernetes-cluster-monitoring-via-prometheus?orgId=1&refresh=5s)  
-App Metrics [LINK](http://51.250.14.150:3000/d/bffb1063-3785-43ce-aebf-7d4e61c34975/app-metrics?orgId=1)  
-
-
+Loki Logs [endpoint]  
+Kubernetes cluster monitoring (via Prometheus) [endpoint]  
+App Metrics [endpoint]  
 
 ### Installation
-
 
 Prometheus
 ```bash
@@ -113,7 +120,7 @@ kubectl get pods -l "app=trickster"
 Grafana
 ```bash
 cd ../k8s-manifests/monitoring
-kubectl apply -f grafana.yaml\n
+kubectl apply -f grafana.yaml
 kubectl get pods -l "app=grafana"
 export GRAFANA_IP=$(kubectl get service/grafana -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 export GRAFANA_PORT=$(kubectl get service/grafana -o jsonpath='{.spec.ports[0].port}') 
@@ -138,6 +145,6 @@ helm upgrade --install --values promtail-overrides.yaml promtail grafana/promtai
 
 ## Scripts
 
-В директории [scripts](./scripts/) два скрипта: 
-1. python скрипт для скачивания картинок
-2. bash скрипт для выгрузки картинок в бакет
+In the [scripts](./scripts/) directory, you'll find two scripts:
+1. A Python script for downloading images.
+2. A Bash script for uploading images to a bucket.
